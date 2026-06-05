@@ -10,7 +10,6 @@
     <meta name="apple-mobile-web-app-title" content="Panadería">
     <title>PANADERÍA LOS ARTESANOS</title>
     <link rel="manifest" href="manifest.json">
-    <!-- Ícono inline para iOS via SVG embebido -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c0392b'/><text y='68' x='50' text-anchor='middle' font-size='60'>🥖</text></svg>">
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
@@ -516,7 +515,6 @@
 <div id="toast"></div>
 <datalist id="lista-clientes-sugeridos"></datalist>
 
-<!-- ══════════════ MODAL PERÍODO ══════════════ -->
 <div id="modal-periodo" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:1100; align-items:center; justify-content:center; padding:16px;">
     <div style="background:white; border-radius:18px; width:100%; max-width:380px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,0.5);">
         <div style="background:linear-gradient(135deg,#1565c0,#1a73e8); padding:20px; text-align:center; color:white;">
@@ -533,9 +531,6 @@
         </div>
     </div>
 </div>
-<!-- ══════════════ FIN MODAL PERÍODO ══════════════ -->
-
-<!-- ══════════════ MODAL CIERRE ══════════════ -->
 <div id="modal-cierre">
     <div class="modal-card">
         <div class="modal-header">
@@ -581,9 +576,6 @@
         </div>
     </div>
 </div>
-<!-- ══════════════ FIN MODAL ══════════════ -->
-
-<!-- ══════════════ HEADER ══════════════ -->
 <div class="app-header">
     <h1>🥖 Panadería Los Artesanos</h1>
     <p>Sistema de cuentas corrientes</p>
@@ -591,7 +583,6 @@
 
 <div class="container">
 
-    <!-- ══ DASHBOARD ══ -->
     <div class="dashboard">
         <div class="dash-card dc-green">
             <span class="dc-icon">💵</span>
@@ -612,10 +603,8 @@
 
     <div class="layout-pc">
 
-        <!-- ══ COLUMNA IZQUIERDA ══ -->
         <div class="col-izq">
 
-            <!-- Último registro -->
             <div class="ultimo-registro" id="panel-ultimo">
                 <div class="ur-header">
                     <div class="ur-dot"></div>
@@ -624,7 +613,6 @@
                 <div id="ur-contenido"><div class="ur-empty">Sin registros aún</div></div>
             </div>
 
-            <!-- Clientes -->
             <div class="seccion" id="seccion-clientes">
                 <div class="sec-header">
                     <span class="sec-icon">👥</span>
@@ -643,12 +631,8 @@
                 </div>
             </div>
 
-        </div><!-- /col-izq -->
+        </div><div class="col-der">
 
-        <!-- ══ COLUMNA DERECHA ══ -->
-        <div class="col-der">
-
-            <!-- Acciones del cliente -->
             <div id="tools">
                 <span class="tools-title">Acciones para el cliente seleccionado</span>
                 <button class="btn-tool bt-excel"  onclick="exportarExcel()">📊 Excel</button>
@@ -657,10 +641,8 @@
                 <button class="btn-tool bt-cierre" onclick="abrirModalCierre()">⚖️ Cierre de mes</button>
             </div>
 
-            <!-- Formularios -->
             <div class="forms-row">
 
-                <!-- Formulario Venta -->
                 <div class="form-card">
                     <div class="form-header fh-venta">
                         <span class="fh-icon">🛒</span>
@@ -694,7 +676,6 @@
                     </div>
                 </div>
 
-                <!-- Formulario Abono -->
                 <div class="form-card">
                     <div class="form-header fh-abono">
                         <span class="fh-icon">💰</span>
@@ -728,10 +709,7 @@
                     </div>
                 </div>
 
-            </div><!-- /forms-row -->
-
-    <!-- ══ TABLA ══ -->
-            <div class="tabla-card" id="tabla-card" style="display:none;">
+            </div><div class="tabla-card" id="tabla-card" style="display:none;">
                 <div class="tabla-header">
                     <span style="font-size:1.1rem;">📒</span>
                     <h2>Movimientos</h2>
@@ -754,12 +732,7 @@
                 <div id="resumen-final-cont"></div>
             </div>
 
-        </div><!-- /col-der -->
-    </div><!-- /layout-pc -->
-
-</div><!-- /container -->
-
-<script>
+        </div></div></div><script>
     const firebaseConfig = {
         apiKey: "AIzaSyBoMcTBhHt8ev1fbvT_Q5SkMY8Q",
         authDomain: "panaderia-e7d4c.firebaseapp.com",
@@ -935,9 +908,13 @@
         }
 
         filtrados.forEach(n => {
-            // Calcular deuda del cliente
+            // Calcular deuda del cliente (IGNORANDO SALDO MES ANTERIOR PARA NO DUPLICAR)
             let deuda = 0;
-            datos.filter(v => v.cliente === n).forEach(v => { deuda += v.esAbono ? -v.monto : v.monto; });
+            datos.filter(v => v.cliente === n).forEach(v => { 
+                if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
+                    deuda += v.esAbono ? -v.monto : v.monto; 
+                }
+            });
             const li = document.createElement('li');
             li.className = `client-item ${sel === n ? 'active' : ''}`;
             li.innerHTML = `<span>${n}</span>${deuda > 0 ? `<span class="ci-deuda">$${deuda.toLocaleString()}</span>` : '<span class="ci-deuda" style="background:#e8f5e9;color:#27ae60;">✓ al día</span>'}`;
@@ -954,7 +931,10 @@
 
         // Dashboard siempre actualizado con todos los datos
         datos.forEach(v => {
-            deudaG += v.esAbono ? -v.monto : v.monto;
+            // IGNORAMOS SALDO MES ANTERIOR EN EL TOTAL GLOBAL PARA NO DUPLICAR
+            if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
+                deudaG += v.esAbono ? -v.monto : v.monto;
+            }
             if (v.fecha.startsWith(fechaHoy().slice(0, 7)) && v.esAbono) cajaM += v.monto;
         });
         document.getElementById('c-contado').innerText = `$${cajaM.toLocaleString()}`;
@@ -995,7 +975,15 @@
             meses[m].sort((a, b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
                 const d  = v.esAbono ? 0 : v.monto;
                 const hb = v.esAbono ? v.monto : 0;
-                subD += d; subH += hb; saldoT += (d - hb);
+                
+                // Estos suman TODO para armar el subtotal del mes correcto
+                subD += d; subH += hb; 
+                
+                // Pero para la variable final, evitamos sumar doble el saldo viejo
+                if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
+                    saldoT += (d - hb);
+                }
+
                 const tr = document.createElement('tr');
                 tr.dataset.mes = m;
                 if (v.descripcion?.startsWith('CIERRE MES'))         tr.className = 'row-cierre-resaltado';
@@ -1041,6 +1029,7 @@
                 <div class="sf-val" style="color:${colorSaldo};">$${saldoT.toLocaleString()}</div>
             </div>`;
     }
+
     /* ══ MODAL CIERRE DE MES ══ */
     let _deudaModal = 0;
 
@@ -1300,7 +1289,13 @@
             meses[m].sort((a,b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
                 const d  = v.esAbono ? 0 : v.monto;
                 const hb = v.esAbono ? v.monto : 0;
-                subD += d; subH += hb; saldoTotal += (d - hb);
+                subD += d; subH += hb; 
+                
+                // Si imprimimos todo, ignoramos el duplicado. Si imprimimos un mes suelto, lo necesitamos.
+                if (!esTodo || !v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
+                    saldoTotal += (d - hb);
+                }
+
                 filas.push([
                     v.fecha.split('T')[0].split('-').reverse().join('/'),
                     v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA'),
@@ -1326,11 +1321,15 @@
 
     function _imprimirTabla(periodo) {
         // Calcular saldo del período seleccionado
+        const esTodo = periodo === 'todos';
         const datosPeriodo = _getDatosFiltrados(periodo);
         let saldoPeriodo = 0;
-        datosPeriodo.forEach(v => { saldoPeriodo += v.esAbono ? -v.monto : v.monto; });
+        datosPeriodo.forEach(v => { 
+            if (!esTodo || !v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
+                saldoPeriodo += v.esAbono ? -v.monto : v.monto; 
+            }
+        });
 
-        const esTodo = periodo === 'todos';
         const labelSaldo = esTodo ? 'SALDO TOTAL' : `SALDO ${_nombreMes(periodo)}`;
 
         // Inyectar nombre del cliente y saldo correcto en el área de resumen temporal
@@ -1390,7 +1389,12 @@
             meses[m].sort((a,b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
                 const d  = v.esAbono ? 0 : v.monto;
                 const hb = v.esAbono ? v.monto : 0;
-                subD += d; subH += hb; saldoTotal += (d - hb);
+                subD += d; subH += hb; 
+                
+                if (!esTodo || !v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
+                    saldoTotal += (d - hb);
+                }
+
                 const fechaFmt = v.fecha.split('T')[0].split('-').reverse().join('/');
                 const desc = v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA');
                 if (d)  msg += `  ${fechaFmt}  ${desc}  *-$${d.toLocaleString()}*\n`;
@@ -1416,4 +1420,3 @@
 </script>
 </body>
 </html>
-
