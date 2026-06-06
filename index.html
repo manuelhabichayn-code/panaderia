@@ -338,14 +338,23 @@
         .saldo-final .sf-label { color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .saldo-final .sf-val   { color: #00ff88; font-size: 1.5rem; font-weight: 800; }
 
-        /* ══ TOAST ══ */
+        /* ══ TOAST MEJORADO ══ */
         #toast {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-            background: #1a1a2e; color: white; padding: 14px 24px;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white; padding: 14px 28px;
             border-radius: 30px; display: none; z-index: 3000;
-            font-size: 0.9rem; text-align: center; max-width: 88vw;
-            line-height: 1.5; box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem; font-weight: 700; text-align: center;
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.4);
+            white-space: nowrap;
+        }
+        @keyframes slideUp {
+            from { bottom: -20px; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { bottom: 30px; opacity: 1; }
+            to { bottom: 30px; opacity: 0; }
         }
 
         /* ══ MODAL CIERRE ══ */
@@ -756,11 +765,52 @@
     document.getElementById('v-fec').value = fechaHoy();
     document.getElementById('a-fec').value = fechaHoy();
 
-    /* ── TOAST ── */
+    /* ── SINTETIZADOR DE SONIDO ── */
+    function reproducirSonidoExito() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            const audioCtx = new AudioContext();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.2);
+        } catch(e) { console.log("Audio no soportado en este navegador"); }
+    }
+
+    /* ── TOAST MEJORADO CON VIBRACIÓN Y SONIDO ── */
     function mostrarToast(m) {
         const t = document.getElementById('toast');
-        t.innerText = m; t.style.display = "block";
-        setTimeout(() => t.style.display = "none", 5000);
+        t.innerText = m;
+        t.style.display = "block";
+        t.style.animation = "slideUp 0.3s ease-out forwards";
+
+        // Vibración (dos toques rápidos)
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
+
+        // Sonido
+        reproducirSonidoExito();
+
+        setTimeout(() => {
+            t.style.animation = "fadeOut 0.3s ease-out forwards";
+            setTimeout(() => {
+                t.style.display = "none";
+                t.style.animation = ""; // Reset
+            }, 300);
+        }, 3000);
     }
 
     /* ── SALTO AUTOMÁTICO ── */
