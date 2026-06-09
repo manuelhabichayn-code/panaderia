@@ -460,7 +460,7 @@
 </div>
 
 <div class="app-header">
-    <h1>🥖 Panadería Los Artesanos</h1>
+    <h1>🥖 PANADERÍA LOS ARTESANOS</h1>
     <p>Sistema de cuentas corrientes</p>
 </div>
 
@@ -780,7 +780,22 @@
             h.innerHTML = `<td colspan="5">📅 ${mesNombre.toUpperCase()}</td>`; tbody.appendChild(h);
 
             let subD = 0, subH = 0;
-            meses[m].sort((a, b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
+            
+            // ORDENAMIENTO ESTRICTO DENTRO DEL MES CON REGLAS MATEMÁTICAS SEGURAS
+            meses[m].sort((a, b) => {
+                const dateComp = a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10));
+                if (dateComp !== 0) return dateComp;
+                
+                const aCierre = a.descripcion?.startsWith('CIERRE MES') ? 1 : 0;
+                const bCierre = b.descripcion?.startsWith('CIERRE MES') ? 1 : 0;
+                if (aCierre !== bCierre) return aCierre - bCierre;
+                
+                const aInicio = (a.descripcion?.startsWith('SALDO MES ANTERIOR') || a.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) ? -1 : 0;
+                const bInicio = (b.descripcion?.startsWith('SALDO MES ANTERIOR') || b.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) ? -1 : 0;
+                if (aInicio !== bInicio) return aInicio - bInicio;
+                
+                return 0;
+            }).forEach(v => {
                 const d  = v.esAbono ? 0 : v.monto; const hb = v.esAbono ? v.monto : 0;
                 subD += d; subH += hb; 
                 if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
@@ -1027,7 +1042,22 @@
         Object.keys(meses).sort().forEach(m => {
             if (esTodo) filas.push([`— ${_nombreMes(m)} —`, "", "", ""]);
             let subD = 0, subH = 0;
-            meses[m].sort((a,b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
+            
+            // ORDENAMIENTO SEGURO EN EXCEL
+            meses[m].sort((a, b) => {
+                const dateComp = a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10));
+                if (dateComp !== 0) return dateComp;
+                
+                const aCierre = a.descripcion?.startsWith('CIERRE MES') ? 1 : 0;
+                const bCierre = b.descripcion?.startsWith('CIERRE MES') ? 1 : 0;
+                if (aCierre !== bCierre) return aCierre - bCierre;
+                
+                const aInicio = (a.descripcion?.startsWith('SALDO MES ANTERIOR') || a.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) ? -1 : 0;
+                const bInicio = (b.descripcion?.startsWith('SALDO MES ANTERIOR') || b.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) ? -1 : 0;
+                if (aInicio !== bInicio) return aInicio - bInicio;
+                
+                return 0;
+            }).forEach(v => {
                 const d  = v.esAbono ? 0 : v.monto; const hb = v.esAbono ? v.monto : 0;
                 subD += d; subH += hb; 
                 if (!esTodo || (!v.descripcion?.startsWith('SALDO MES ANTERIOR'))) saldoTotal += (d - hb);
@@ -1062,7 +1092,22 @@
         Object.keys(meses).sort().forEach(m => {
             if (esTodo) msg += `\n📅 *${_nombreMes(m)}*\n`;
             let subD = 0, subH = 0;
-            meses[m].sort((a,b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
+            
+            // ORDENAMIENTO SEGURO EN WHATSAPP
+            meses[m].sort((a, b) => {
+                const dateComp = a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10));
+                if (dateComp !== 0) return dateComp;
+                
+                const aCierre = a.descripcion?.startsWith('CIERRE MES') ? 1 : 0;
+                const bCierre = b.descripcion?.startsWith('CIERRE MES') ? 1 : 0;
+                if (aCierre !== bCierre) return aCierre - bCierre;
+                
+                const aInicio = (a.descripcion?.startsWith('SALDO MES ANTERIOR') || a.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) ? -1 : 0;
+                const bInicio = (b.descripcion?.startsWith('SALDO MES ANTERIOR') || b.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) ? -1 : 0;
+                if (aInicio !== bInicio) return aInicio - bInicio;
+                
+                return 0;
+            }).forEach(v => {
                 const d  = v.esAbono ? 0 : v.monto; const hb = v.esAbono ? v.monto : 0;
                 subD += d; subH += hb; 
                 if (!esTodo || (!v.descripcion?.startsWith('SALDO MES ANTERIOR'))) saldoTotal += (d - hb);
