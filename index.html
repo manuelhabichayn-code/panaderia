@@ -145,94 +145,6 @@
         .bt-wa     { background: linear-gradient(135deg, #075e54, #25d366); }
         .bt-cierre { background: linear-gradient(135deg, #6c3483, #8e44ad); }
 
-        /* ══ IMPRESIÓN ══ */
-        @media print {
-            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-            /* Ocultar absolutamente todo */
-            body > * { display: none !important; }
-
-            /* Mostrar solo el container */
-            .container { display: block !important; }
-
-            /* Dentro del container, ocultar todo excepto tabla-card y resumen */
-            .dashboard, .ultimo-registro, #seccion-clientes,
-            #tools, .form-card { display: none !important; }
-
-            /* tabla-card visible */
-            .tabla-card {
-                display: block !important;
-                box-shadow: none !important; border-radius: 0 !important;
-                margin: 0 !important; border: none !important;
-            }
-
-            /* Ocultar header interno de la tabla */
-            .tabla-header { display: none !important; }
-
-            /* Ocultar columna de acciones */
-            th:last-child, td:last-child { display: none !important; }
-
-            /* Título propio impreso */
-            .tabla-card::before {
-                content: "PANADERÍA LOS ARTESANOS — Cuenta corriente" "\A" var(--print-cliente, "");
-                white-space: pre;
-                display: block !important;
-                font-size: 13pt; font-weight: 800;
-                text-align: center; padding: 10px 0 10px;
-                border-bottom: 2px solid #000;
-                margin-bottom: 14px; color: #000;
-                line-height: 1.8;
-            }
-            .tabla-card::after { content: none; }
-
-            /* Blanco y negro puro */
-            body, .container, .tabla-card, .tabla-scroll,
-            table, th, td { background: white !important; color: black !important; }
-
-            table { font-size: 10pt; min-width: unset !important; width: 100%; border-collapse: collapse; }
-            th { font-size: 8pt; font-weight: 700; text-transform: uppercase;
-                 letter-spacing: 0.5px; padding: 7px 6px;
-                 border-bottom: 2px solid #000 !important; background: white !important; color: #000 !important; }
-            td { padding: 7px 6px; border-bottom: 1px solid #bbb !important;
-                 background: white !important; color: #000 !important; font-weight: normal !important; }
-
-            .row-mes-header td {
-                background: white !important; color: #000 !important;
-                font-weight: 700 !important; font-size: 9pt !important;
-                border-top: 1.5px solid #000 !important; border-bottom: 1px solid #000 !important;
-                letter-spacing: 0.5px; padding: 6px !important;
-            }
-            .row-subtotal-mes td {
-                background: white !important; color: #000 !important; font-weight: 700 !important;
-                border-top: 1.5px solid #000 !important; border-bottom: 2px solid #000 !important;
-                padding-bottom: 14px !important;
-            }
-            /* Espacio visual entre el subtotal y el siguiente mes */
-            .row-subtotal-mes + tr td { padding-top: 16px !important; }
-
-            /* Saldo final separado de la tabla */
-            #resumen-final-cont { margin-top: 24px !important; display: block !important; }
-            .row-cierre-resaltado td {
-                background: white !important; color: #000 !important;
-                border-left: 3px solid #000 !important; font-weight: 700 !important;
-            }
-            .row-saldo-anterior td {
-                background: white !important; color: #000 !important;
-                border-left: 3px solid #555 !important; font-style: italic; font-weight: 700 !important;
-            }
-            .td-debe, .td-haber { color: #000 !important; font-weight: 700 !important; }
-            .td-fecha   { font-weight: 700 !important; color: #000 !important; }
-            .td-detalle { font-weight: 600 !important; color: #000 !important; }
-            .saldo-final {
-                background: white !important; color: #000 !important;
-                border: 2px solid #000 !important; border-radius: 0 !important;
-                margin-top: 10px !important; padding: 10px 14px !important;
-                display: block !important;
-            }
-            .saldo-final .sf-label { color: #000 !important; display: block !important; }
-            .saldo-final .sf-val   { color: #000 !important; font-size: 14pt !important; display: block !important; }
-        }
-
         /* ══ FORMULARIOS ══ */
         .form-card {
             background: white; border-radius: 16px;
@@ -292,7 +204,6 @@
         }
         td { padding: 11px 10px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
 
-        /* Fecha y detalle con tipografía destacada */
         td.td-fecha  { font-size: 0.88rem; font-weight: 700; color: #444; white-space: nowrap; }
         td.td-detalle { font-size: 0.93rem; font-weight: 600; color: #1a1a2e; }
 
@@ -328,7 +239,6 @@
         }
         .btn-pagar:active { opacity: 0.8; transform: scale(0.95); }
 
-        /* saldo final */
         .saldo-final {
             margin: 0; padding: 18px 20px;
             background: linear-gradient(135deg, #1a1a2e, #16213e);
@@ -338,7 +248,7 @@
         .saldo-final .sf-label { color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .saldo-final .sf-val   { color: #00ff88; font-size: 1.5rem; font-weight: 800; }
 
-        /* ══ TOAST MEJORADO ══ */
+        /* ══ TOAST ══ */
         #toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             background: linear-gradient(135deg, #27ae60, #2ecc71);
@@ -346,16 +256,10 @@
             border-radius: 30px; display: none; z-index: 3000;
             font-size: 0.95rem; font-weight: 700; text-align: center;
             box-shadow: 0 8px 24px rgba(39, 174, 96, 0.4);
-            white-space: nowrap;
+            white-space: pre-wrap;
         }
-        @keyframes slideUp {
-            from { bottom: -20px; opacity: 0; }
-            to { bottom: 30px; opacity: 1; }
-        }
-        @keyframes fadeOut {
-            from { bottom: 30px; opacity: 1; }
-            to { bottom: 30px; opacity: 0; }
-        }
+        @keyframes slideUp { from { bottom: -20px; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+        @keyframes fadeOut { from { bottom: 30px; opacity: 1; } to { bottom: 30px; opacity: 0; } }
 
         /* ══ MODAL CIERRE ══ */
         #modal-cierre {
@@ -392,6 +296,8 @@
         #panel-resultado { border-radius: 12px; padding: 14px 16px; margin-top: 14px; display: none; }
         #panel-resultado.completo { background: #e8f5e9; border: 1.5px solid #66bb6a; }
         #panel-resultado.parcial  { background: #fff8e1; border: 1.5px solid #ffa726; }
+        #panel-resultado.sobrante { background: #e1f5fe; border: 1.5px solid #29b6f6; }
+        
         .res-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.9rem; }
         .res-row:last-child { margin-bottom: 0; }
         .tag-verde   { color: #2e7d32; font-weight: 800; font-size: 1rem; }
@@ -432,6 +338,7 @@
         .ur-abono   { background: #e8f5e9; }
         .ur-cierre  { background: #f3e5f5; }
         .ur-saldo   { background: #fff8e1; }
+        .ur-sobrante { background: #e1f5fe; }
         .ur-info { flex: 1; min-width: 0; }
         .ur-info .ur-tipo  { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 2px; }
         .ur-info .ur-desc  { font-size: 0.92rem; font-weight: 700; color: #2d2d2d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -446,73 +353,32 @@
         .empty-state .es-icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
         .empty-state p { margin: 0; font-size: 0.88rem; }
 
-        /* ══ RESPONSIVE — DESKTOP ══ */
+        /* ══ RESPONSIVE ══ */
         @media (min-width: 900px) {
-
-            /* Header más compacto en PC */
             .app-header { padding: 14px 32px; display: flex; align-items: center; justify-content: center; gap: 20px; text-align: left; }
             .app-header h1 { font-size: 1.4rem; }
             .app-header p  { margin: 0; font-size: 0.82rem; }
-
-            /* Container más ancho */
             .container { max-width: 1280px; padding: 20px 28px; }
-
-            /* Dashboard en una fila más cómoda */
             .dashboard { grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
             .dash-card .dc-val { font-size: 1.35rem; }
-
-            /* Layout principal: dos columnas */
-            .layout-pc {
-                display: grid;
-                grid-template-columns: 320px 1fr;
-                gap: 20px;
-                align-items: start;
-            }
-
-            /* Columna izquierda: clientes fija al hacer scroll */
-            .col-izq {
-                position: sticky;
-                top: 76px; /* altura del header */
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
-            }
-
-            /* Lista de clientes más alta en PC */
+            .layout-pc { display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start; }
+            .col-izq { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 14px; }
             .client-list { max-height: 420px; }
-
-            /* Columna derecha: formularios + tabla */
             .col-der { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-
-            /* Formularios lado a lado en PC */
-            .forms-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
+            .forms-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
             .forms-row .form-card { margin-bottom: 0; }
-
-            /* Tools en una fila en PC */
             #tools { flex-wrap: nowrap; }
             .btn-tool { font-size: 0.85rem; padding: 12px 14px; min-width: 0; }
-
-            /* Tabla más cómoda */
             table { font-size: 0.88rem; min-width: unset; }
             th, td { padding: 12px 12px; }
-
-            /* Último registro en columna izquierda */
             .ultimo-registro { margin-bottom: 0; }
         }
-
-        /* ══ RESPONSIVE — TABLET ══ */
         @media (min-width: 600px) and (max-width: 899px) {
             .container { max-width: 700px; padding: 16px 20px; }
             .client-list { max-height: 220px; }
             .forms-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
             .forms-row .form-card { margin-bottom: 0; }
         }
-
-        /* ══ RESPONSIVE — MOBILE ══ */
         @media (max-width: 599px) {
             .dash-card .dc-val { font-size: 1rem; }
             .field-row { grid-template-columns: 1fr; }
@@ -540,6 +406,7 @@
         </div>
     </div>
 </div>
+
 <div id="modal-cierre">
     <div class="modal-card">
         <div class="modal-header">
@@ -558,7 +425,7 @@
                 </div>
                 <span class="dicon">📋</span>
             </div>
-            <label class="cobrar-label">✏️ Monto a cobrar ahora</label>
+            <label class="cobrar-label">✏️ Monto que entrega el cliente</label>
             <input type="number" id="monto-cierre" placeholder="0" oninput="actualizarPanelCierre()">
             <div class="prog-wrap">
                 <div class="prog-labels">
@@ -567,6 +434,7 @@
                 </div>
                 <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
             </div>
+            
             <div id="panel-resultado">
                 <div id="sub-completo">
                     <div class="res-row"><span>✅ Pago completo</span><span class="tag-verde" id="lbl-cobro-ok"></span></div>
@@ -575,7 +443,12 @@
                 <div id="sub-parcial" style="display:none;">
                     <div class="res-row"><span>💰 Se cobra ahora</span><span class="tag-verde" id="lbl-cobrado"></span></div>
                     <div class="res-row"><span>⏳ Queda pendiente</span><span class="tag-naranja" id="lbl-pendiente"></span></div>
-                    <div class="aviso"><span>⚠️</span><span>El saldo pendiente se registrará automáticamente el 1° del mes siguiente con la descripción <strong>"Saldo mes anterior"</strong>.</span></div>
+                    <div class="aviso"><span>⚠️</span><span>El saldo pendiente se registrará automáticamente el 1° del mes siguiente como <strong>"Saldo mes anterior"</strong>.</span></div>
+                </div>
+                <div id="sub-sobrante" style="display:none;">
+                    <div class="res-row"><span>💰 Total entregado</span><span class="tag-verde" id="lbl-cobrado-sob"></span></div>
+                    <div class="res-row"><span>🔄 Queda a favor</span><span class="tag-verde" id="lbl-sobrante" style="color:#0288d1;"></span></div>
+                    <div class="aviso" style="color:#0277bd; border-top-color:#81d4fa;"><span>ℹ️</span><span>El saldo a favor se registrará el 1° del mes siguiente como <strong>"Sobrante mes anterior"</strong>.</span></div>
                 </div>
             </div>
         </div>
@@ -585,48 +458,29 @@
         </div>
     </div>
 </div>
+
 <div class="app-header">
     <h1>🥖 Panadería Los Artesanos</h1>
     <p>Sistema de cuentas corrientes</p>
 </div>
 
 <div class="container">
-
     <div class="dashboard">
-        <div class="dash-card dc-green">
-            <span class="dc-icon">💵</span>
-            <div class="dc-label">Caja del mes</div>
-            <span class="dc-val" id="c-contado">$0</span>
-        </div>
-        <div class="dash-card dc-orange">
-            <span class="dc-icon">📊</span>
-            <div class="dc-label">Deuda global</div>
-            <span class="dc-val" id="c-fiado">$0</span>
-        </div>
-        <div class="dash-card dc-blue">
-            <span class="dc-icon">👤</span>
-            <div class="dc-label">Cliente activo</div>
-            <span class="dc-val" id="c-visto" style="font-size:0.8rem; word-break:break-word;">—</span>
-        </div>
+        <div class="dash-card dc-green"><span class="dc-icon">💵</span><div class="dc-label">Caja del mes</div><span class="dc-val" id="c-contado">$0</span></div>
+        <div class="dash-card dc-orange"><span class="dc-icon">📊</span><div class="dc-label">Deuda global</div><span class="dc-val" id="c-fiado">$0</span></div>
+        <div class="dash-card dc-blue"><span class="dc-icon">👤</span><div class="dc-label">Cliente activo</div><span class="dc-val" id="c-visto" style="font-size:0.8rem; word-break:break-word;">—</span></div>
     </div>
 
     <div class="layout-pc">
-
         <div class="col-izq">
-
             <div class="ultimo-registro" id="panel-ultimo">
-                <div class="ur-header">
-                    <div class="ur-dot"></div>
-                    <span>Última acción registrada</span>
-                </div>
+                <div class="ur-header"><div class="ur-dot"></div><span>Última acción registrada</span></div>
                 <div id="ur-contenido"><div class="ur-empty">Sin registros aún</div></div>
             </div>
 
             <div class="seccion" id="seccion-clientes">
                 <div class="sec-header">
-                    <span class="sec-icon">👥</span>
-                    <h2>Clientes</h2>
-                    <span class="sec-badge" id="badge-total">0 clientes</span>
+                    <span class="sec-icon">👥</span><h2>Clientes</h2><span class="sec-badge" id="badge-total">0 clientes</span>
                 </div>
                 <div class="sec-body">
                     <div class="search-wrap">
@@ -639,9 +493,9 @@
                     <button class="btn-limpiar" onclick="limpiar()">✕ &nbsp;Limpiar selección / Ver todos</button>
                 </div>
             </div>
+        </div>
 
-        </div><div class="col-der">
-
+        <div class="col-der">
             <div id="tools">
                 <span class="tools-title">Acciones para el cliente seleccionado</span>
                 <button class="btn-tool bt-excel"  onclick="exportarExcel()">📊 Excel</button>
@@ -651,97 +505,52 @@
             </div>
 
             <div class="forms-row">
-
                 <div class="form-card">
                     <div class="form-header fh-venta">
-                        <span class="fh-icon">🛒</span>
-                        <h3>Nueva Venta / Fiado</h3>
-                        <span class="fh-sub">Debe</span>
+                        <span class="fh-icon">🛒</span><h3>Nueva Venta / Fiado</h3><span class="fh-sub">Debe</span>
                     </div>
                     <div class="form-body">
-                        <div class="field">
-                            <label>Cliente</label>
-                            <input type="text" id="v-cli" list="lista-clientes-sugeridos" placeholder="Nombre del cliente"
-                                oninput="chequearSaltoAutomatico(this,'v-mon')"
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('v-mon').focus();}">
-                        </div>
+                        <div class="field"><label>Cliente</label><input type="text" id="v-cli" list="lista-clientes-sugeridos" placeholder="Nombre del cliente" oninput="chequearSaltoAutomatico(this,'v-mon')" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('v-mon').focus();}"></div>
                         <div class="field-row">
-                            <div class="field">
-                                <label>Monto $</label>
-                                <input type="number" id="v-mon" placeholder="0"
-                                    onkeydown="if(event.key==='Enter'){event.preventDefault();guardarV();}">
-                            </div>
-                            <div class="field">
-                                <label>Fecha</label>
-                                <input type="date" id="v-fec" tabindex="-1">
-                            </div>
+                            <div class="field"><label>Monto $</label><input type="number" id="v-mon" placeholder="0" onkeydown="if(event.key==='Enter'){event.preventDefault();guardarV();}"></div>
+                            <div class="field"><label>Fecha</label><input type="date" id="v-fec" tabindex="-1"></div>
                         </div>
-                        <div class="field">
-                            <label>Descripción <span style="color:#bbb;font-weight:400;">(opcional)</span></label>
-                            <input type="text" id="v-desc" tabindex="-1" placeholder="Ej: Pan, facturas, medialunas..."
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();guardarV();}">
-                        </div>
+                        <div class="field"><label>Descripción <span style="color:#bbb;font-weight:400;">(opcional)</span></label><input type="text" id="v-desc" tabindex="-1" placeholder="Ej: Pan, facturas..." onkeydown="if(event.key==='Enter'){event.preventDefault();guardarV();}"></div>
                         <button class="btn-registrar br-venta" onclick="guardarV()">✔ REGISTRAR VENTA</button>
                     </div>
                 </div>
 
                 <div class="form-card">
                     <div class="form-header fh-abono">
-                        <span class="fh-icon">💰</span>
-                        <h3>Registrar Abono</h3>
-                        <span class="fh-sub">Haber</span>
+                        <span class="fh-icon">💰</span><h3>Registrar Abono</h3><span class="fh-sub">Haber</span>
                     </div>
                     <div class="form-body">
-                        <div class="field">
-                            <label>Cliente</label>
-                            <input type="text" id="a-cli" list="lista-clientes-sugeridos" placeholder="Nombre del cliente"
-                                oninput="chequearSaltoAutomatico(this,'a-mon')"
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('a-mon').focus();}">
-                        </div>
+                        <div class="field"><label>Cliente</label><input type="text" id="a-cli" list="lista-clientes-sugeridos" placeholder="Nombre del cliente" oninput="chequearSaltoAutomatico(this,'a-mon')" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('a-mon').focus();}"></div>
                         <div class="field-row">
-                            <div class="field">
-                                <label>Monto $</label>
-                                <input type="number" id="a-mon" placeholder="0"
-                                    onkeydown="if(event.key==='Enter'){event.preventDefault();guardarA();}">
-                            </div>
-                            <div class="field">
-                                <label>Fecha</label>
-                                <input type="date" id="a-fec" tabindex="-1">
-                            </div>
+                            <div class="field"><label>Monto $</label><input type="number" id="a-mon" placeholder="0" onkeydown="if(event.key==='Enter'){event.preventDefault();guardarA();}"></div>
+                            <div class="field"><label>Fecha</label><input type="date" id="a-fec" tabindex="-1"></div>
                         </div>
-                        <div class="field">
-                            <label>Descripción <span style="color:#bbb;font-weight:400;">(opcional)</span></label>
-                            <input type="text" id="a-desc" tabindex="-1" placeholder="Ej: Pago en efectivo..."
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();guardarA();}">
-                        </div>
+                        <div class="field"><label>Descripción <span style="color:#bbb;font-weight:400;">(opcional)</span></label><input type="text" id="a-desc" tabindex="-1" placeholder="Ej: Pago en efectivo..." onkeydown="if(event.key==='Enter'){event.preventDefault();guardarA();}"></div>
                         <button class="btn-registrar br-abono" onclick="guardarA()">✔ REGISTRAR ABONO</button>
                     </div>
                 </div>
+            </div>
 
-            </div><div class="tabla-card" id="tabla-card" style="display:none;">
-                <div class="tabla-header">
-                    <span style="font-size:1.1rem;">📒</span>
-                    <h2>Movimientos</h2>
-                    <span class="th-cliente" id="badge-cliente-tabla" style="margin-left:auto;"></span>
-                </div>
+            <div class="tabla-card" id="tabla-card" style="display:none;">
+                <div class="tabla-header"><span style="font-size:1.1rem;">📒</span><h2>Movimientos</h2><span class="th-cliente" id="badge-cliente-tabla" style="margin-left:auto;"></span></div>
                 <div class="tabla-scroll">
                     <table id="tabla-registros">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Detalle</th>
-                                <th>Debe</th>
-                                <th>Haber</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Fecha</th><th>Detalle</th><th>Debe</th><th>Haber</th><th></th></tr></thead>
                         <tbody id="res-tabla"></tbody>
                     </table>
                 </div>
                 <div id="resumen-final-cont"></div>
             </div>
+        </div>
+    </div>
+</div>
 
-        </div></div></div><script>
+<script>
     const firebaseConfig = {
         apiKey: "AIzaSyBoMcTBhHt8ev1fbvT_Q5SkMY8Q",
         authDomain: "panaderia-e7d4c.firebaseapp.com",
@@ -765,98 +574,70 @@
     document.getElementById('v-fec').value = fechaHoy();
     document.getElementById('a-fec').value = fechaHoy();
 
-    /* ── SINTETIZADOR DE SONIDO ── */
     function reproducirSonidoExito() {
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             const audioCtx = new AudioContext();
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-
             gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
             gainNode.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.05);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + 0.2);
-        } catch(e) { console.log("Audio no soportado en este navegador"); }
+        } catch(e) { console.log("Audio no soportado"); }
     }
 
-    /* ── TOAST MEJORADO CON VIBRACIÓN Y SONIDO ── */
     function mostrarToast(m) {
         const t = document.getElementById('toast');
         t.innerText = m;
         t.style.display = "block";
         t.style.animation = "slideUp 0.3s ease-out forwards";
-
-        // Vibración (dos toques rápidos)
-        if (navigator.vibrate) {
-            navigator.vibrate([100, 50, 100]);
-        }
-
-        // Sonido
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         reproducirSonidoExito();
-
         setTimeout(() => {
             t.style.animation = "fadeOut 0.3s ease-out forwards";
-            setTimeout(() => {
-                t.style.display = "none";
-                t.style.animation = ""; // Reset
-            }, 300);
-        }, 3000);
+            setTimeout(() => { t.style.display = "none"; t.style.animation = ""; }, 300);
+        }, 4000);
     }
 
-    /* ── SALTO AUTOMÁTICO ── */
     function chequearSaltoAutomatico(input, targetId) {
         if (listaNombres.includes(input.value)) document.getElementById(targetId).focus();
     }
 
-    /* ══ GUARDAR VENTA ══ */
     async function guardarV() {
         const c = document.getElementById('v-cli').value.trim();
         const m = parseFloat(document.getElementById('v-mon').value);
         if (!c || isNaN(m) || m <= 0) return alert("Completar cliente y monto");
         await db.collection("ventas").add({
-            cliente: c, monto: m,
-            fecha: document.getElementById('v-fec').value,
-            descripcion: document.getElementById('v-desc').value.trim(),
-            esAbono: false,
+            cliente: c, monto: m, fecha: document.getElementById('v-fec').value,
+            descripcion: document.getElementById('v-desc').value.trim(), esAbono: false,
             creadoEn: firebase.firestore.FieldValue.serverTimestamp()
         });
-        document.getElementById('v-cli').value = "";
-        document.getElementById('v-mon').value = "";
-        document.getElementById('v-desc').value = "";
+        document.getElementById('v-cli').value = ""; document.getElementById('v-mon').value = ""; document.getElementById('v-desc').value = "";
         setTimeout(() => document.getElementById('v-cli').focus(), 50);
         mostrarToast("✅ Venta registrada correctamente");
     }
 
-    /* ══ GUARDAR ABONO ══ */
     async function guardarA() {
         const c = document.getElementById('a-cli').value.trim();
         const m = parseFloat(document.getElementById('a-mon').value);
         if (!c || isNaN(m) || m <= 0) return alert("Completar cliente y monto");
         await db.collection("ventas").add({
-            cliente: c, monto: m,
-            fecha: document.getElementById('a-fec').value,
-            descripcion: document.getElementById('a-desc').value.trim(),
-            esAbono: true,
+            cliente: c, monto: m, fecha: document.getElementById('a-fec').value,
+            descripcion: document.getElementById('a-desc').value.trim(), esAbono: true,
             creadoEn: firebase.firestore.FieldValue.serverTimestamp()
         });
-        document.getElementById('a-cli').value = "";
-        document.getElementById('a-mon').value = "";
-        document.getElementById('a-desc').value = "";
+        document.getElementById('a-cli').value = ""; document.getElementById('a-mon').value = ""; document.getElementById('a-desc').value = "";
         setTimeout(() => document.getElementById('a-cli').focus(), 50);
         mostrarToast("✅ Abono registrado correctamente");
     }
 
-    /* ══ EDITAR / BORRAR ══ */
     async function editarRegistro(id) {
         const reg = datos.find(d => d.id === id);
         const nM = parseFloat(prompt("Nuevo Monto:", reg.monto));
@@ -867,37 +648,29 @@
         if (confirm("¿Eliminar este registro?")) await db.collection("ventas").doc(id).delete();
     }
 
-    /* ══ LISTENER FIRESTORE ══ */
     db.collection("ventas").orderBy("fecha", "asc").onSnapshot(snap => {
         datos = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        actualizarLista();
-        dibujar();
-        actualizarUltimoRegistro();
+        actualizarLista(); dibujar(); actualizarUltimoRegistro();
     });
 
-    /* ══ ÚLTIMO REGISTRO ══ */
     function actualizarUltimoRegistro() {
         const cont = document.getElementById('ur-contenido');
-        if (datos.length === 0) {
-            cont.innerHTML = `<div class="ur-empty">Sin registros aún</div>`;
-            return;
-        }
+        if (datos.length === 0) return cont.innerHTML = `<div class="ur-empty">Sin registros aún</div>`;
 
-        // Usar creadoEn (timestamp real del servidor) si existe,
-        // si no existe (registros viejos) usar el ID de Firestore como fallback
         const ultimo = [...datos].sort((a, b) => {
             const tA = a.creadoEn?.toMillis?.() ?? 0;
             const tB = b.creadoEn?.toMillis?.() ?? 0;
-            if (tA !== tB) return tB - tA;          // más reciente primero
-            return b.id > a.id ? 1 : -1;            // fallback: ID cronológico
+            if (tA !== tB) return tB - tA;
+            return b.id > a.id ? 1 : -1;
         })[0];
 
-        // Clasificar tipo
         let tipo, iconoWrap, iconoEmoji, montoClass;
         if (ultimo.descripcion?.startsWith('CIERRE MES')) {
             tipo = 'Cierre de mes'; iconoWrap = 'ur-cierre'; iconoEmoji = '⚖️'; montoClass = 'ur-abono-monto';
+        } else if (ultimo.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) {
+            tipo = 'Sobrante a favor'; iconoWrap = 'ur-sobrante'; iconoEmoji = '🔄'; montoClass = 'ur-abono-monto';
         } else if (ultimo.descripcion?.startsWith('SALDO MES ANTERIOR')) {
-            tipo = 'Saldo mes anterior'; iconoWrap = 'ur-saldo'; iconoEmoji = '⏳'; montoClass = 'ur-venta-monto';
+            tipo = 'Saldo pendiente'; iconoWrap = 'ur-saldo'; iconoEmoji = '⏳'; montoClass = 'ur-venta-monto';
         } else if (ultimo.esAbono) {
             tipo = 'Abono / Pago'; iconoWrap = 'ur-abono'; iconoEmoji = '💰'; montoClass = 'ur-abono-monto';
         } else {
@@ -907,9 +680,7 @@
         const fechaFmt = ultimo.fecha.split('T')[0].split('-').reverse().join('/');
         const desc = ultimo.descripcion || (ultimo.esAbono ? 'Abono' : 'Compra');
         const signo = ultimo.esAbono ? '+' : '-';
-
-        // Color del borde lateral según tipo
-        const colores = { 'ur-venta': '#e74c3c', 'ur-abono': '#27ae60', 'ur-cierre': '#8e44ad', 'ur-saldo': '#f39c12' };
+        const colores = { 'ur-venta': '#e74c3c', 'ur-abono': '#27ae60', 'ur-cierre': '#8e44ad', 'ur-saldo': '#f39c12', 'ur-sobrante': '#29b6f6' };
         document.querySelector('.ultimo-registro').style.borderLeftColor = colores[iconoWrap] || '#1a73e8';
 
         cont.innerHTML = `
@@ -924,41 +695,26 @@
             </div>`;
     }
 
-    /* ══ SELECCIONAR CLIENTE ══ */
     function seleccionar(n) {
-        sel = n;
-        document.getElementById('v-cli').value = n;
-        document.getElementById('a-cli').value = n;
-        document.getElementById('tools').style.display = 'flex';
-        document.getElementById('c-visto').innerText = n;
-        document.getElementById('v-mon').focus();
-        dibujar();
+        sel = n; document.getElementById('v-cli').value = n; document.getElementById('a-cli').value = n;
+        document.getElementById('tools').style.display = 'flex'; document.getElementById('c-visto').innerText = n;
+        document.getElementById('v-mon').focus(); dibujar();
     }
 
-    /* ══ LISTA DE CLIENTES ══ */
     function actualizarLista() {
         const b = document.getElementById('busc').value.toLowerCase();
         listaNombres = [...new Set(datos.map(v => v.cliente))].sort();
-
-        // Datalist para autocompletar
         const dl = document.getElementById('lista-clientes-sugeridos');
         dl.innerHTML = "";
         listaNombres.forEach(n => { const o = document.createElement('option'); o.value = n; dl.appendChild(o); });
-
-        // Badge total
         document.getElementById('badge-total').innerText = `${listaNombres.length} cliente${listaNombres.length !== 1 ? 's' : ''}`;
 
         const filtrados = listaNombres.filter(n => n.toLowerCase().includes(b));
-        const lista = document.getElementById('lista-c');
-        lista.innerHTML = "";
+        const lista = document.getElementById('lista-c'); lista.innerHTML = "";
 
-        if (filtrados.length === 0) {
-            lista.innerHTML = `<li><div class="empty-state"><span class="es-icon">🔍</span><p>No se encontraron clientes</p></div></li>`;
-            return;
-        }
+        if (filtrados.length === 0) return lista.innerHTML = `<li><div class="empty-state"><span class="es-icon">🔍</span><p>No se encontraron clientes</p></div></li>`;
 
         filtrados.forEach(n => {
-            // Calcular deuda del cliente (IGNORANDO SALDO MES ANTERIOR PARA NO DUPLICAR)
             let deuda = 0;
             datos.filter(v => v.cliente === n).forEach(v => { 
                 if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
@@ -967,28 +723,35 @@
             });
             const li = document.createElement('li');
             li.className = `client-item ${sel === n ? 'active' : ''}`;
-            li.innerHTML = `<span>${n}</span>${deuda > 0 ? `<span class="ci-deuda">$${deuda.toLocaleString()}</span>` : '<span class="ci-deuda" style="background:#e8f5e9;color:#27ae60;">✓ al día</span>'}`;
+            
+            let badgeHtml = '';
+            if (deuda > 0) {
+                badgeHtml = `<span class="ci-deuda">$${deuda.toLocaleString()}</span>`;
+            } else if (deuda < 0) {
+                badgeHtml = `<span class="ci-deuda" style="background:#e1f5fe;color:#0288d1;">A favor $${Math.abs(deuda).toLocaleString()}</span>`;
+            } else {
+                badgeHtml = `<span class="ci-deuda" style="background:#e8f5e9;color:#27ae60;">✓ al día</span>`;
+            }
+            
+            li.innerHTML = `<span>${n}</span>${badgeHtml}`;
             li.onclick = () => seleccionar(n);
             lista.appendChild(li);
         });
     }
 
-    /* ══ DIBUJAR TABLA ══ */
     function dibujar() {
-        const tbody = document.getElementById('res-tabla');
-        tbody.innerHTML = "";
+        const tbody = document.getElementById('res-tabla'); tbody.innerHTML = "";
         let saldoT = 0, cajaM = 0, deudaG = 0;
 
-        // Dashboard siempre actualizado con todos los datos
         datos.forEach(v => {
-            // IGNORAMOS SALDO MES ANTERIOR EN EL TOTAL GLOBAL PARA NO DUPLICAR
             if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
                 deudaG += v.esAbono ? -v.monto : v.monto;
             }
             if (v.fecha.startsWith(fechaHoy().slice(0, 7)) && v.esAbono) cajaM += v.monto;
         });
+        
         document.getElementById('c-contado').innerText = `$${cajaM.toLocaleString()}`;
-        document.getElementById('c-fiado').innerText   = `$${deudaG.toLocaleString()}`;
+        document.getElementById('c-fiado').innerText   = `$${Math.max(0, deudaG).toLocaleString()}`;
 
         if (!sel) {
             document.getElementById('resumen-final-cont').innerHTML = "";
@@ -1008,81 +771,62 @@
 
         if (Object.keys(meses).length === 0) {
             tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><span class="es-icon">📭</span><p>Sin movimientos para este cliente</p></div></td></tr>`;
-            document.getElementById('resumen-final-cont').innerHTML = "";
-            return;
+            document.getElementById('resumen-final-cont').innerHTML = ""; return;
         }
 
         Object.keys(meses).sort().forEach(m => {
-            const mesNombre = new Date(parseInt(m.split('-')[0]), parseInt(m.split('-')[1]) - 1, 1)
-                .toLocaleString('es-AR', { month: 'long', year: 'numeric' });
-            const h = document.createElement('tr');
-            h.className = 'row-mes-header';
-            h.dataset.mes = m;
-            h.innerHTML = `<td colspan="5">📅 ${mesNombre.toUpperCase()}</td>`;
-            tbody.appendChild(h);
+            const mesNombre = new Date(parseInt(m.split('-')[0]), parseInt(m.split('-')[1]) - 1, 1).toLocaleString('es-AR', { month: 'long', year: 'numeric' });
+            const h = document.createElement('tr'); h.className = 'row-mes-header'; h.dataset.mes = m;
+            h.innerHTML = `<td colspan="5">📅 ${mesNombre.toUpperCase()}</td>`; tbody.appendChild(h);
 
             let subD = 0, subH = 0;
             meses[m].sort((a, b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
-                const d  = v.esAbono ? 0 : v.monto;
-                const hb = v.esAbono ? v.monto : 0;
-                
-                // Estos suman TODO para armar el subtotal del mes correcto
+                const d  = v.esAbono ? 0 : v.monto; const hb = v.esAbono ? v.monto : 0;
                 subD += d; subH += hb; 
-                
-                // Pero para la variable final, evitamos sumar doble el saldo viejo
                 if (!v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
                     saldoT += (d - hb);
                 }
 
-                const tr = document.createElement('tr');
-                tr.dataset.mes = m;
+                const tr = document.createElement('tr'); tr.dataset.mes = m;
                 if (v.descripcion?.startsWith('CIERRE MES'))         tr.className = 'row-cierre-resaltado';
                 if (v.descripcion?.startsWith('SALDO MES ANTERIOR')) tr.className = 'row-saldo-anterior';
+                if (v.descripcion?.startsWith('SOBRANTE MES ANTERIOR')) tr.style.background = '#e1f5fe';
+                
                 const fechaFmt = v.fecha.split('T')[0].split('-').reverse().join('/');
-                const esDeudaPagable = !v.esAbono && !v.descripcion?.startsWith('CIERRE MES');
-                const btnPagar = esDeudaPagable
-                    ? `<button class="btn-pagar" onclick="pagarVenta('${v.id}', ${v.monto}, '${v.fecha}', '${(v.descripcion||'').replace(/'/g,"\\'")}')">💲 Pagar</button>`
-                    : '';
+                const btnPagar = (!v.esAbono && !v.descripcion?.startsWith('CIERRE MES')) ? `<button class="btn-pagar" onclick="pagarVenta('${v.id}', ${v.monto}, '${v.fecha}', '${(v.descripcion||'').replace(/'/g,"\\'")}')">💲 Pagar</button>` : '';
+                
                 tr.innerHTML = `
                     <td class="td-fecha">${fechaFmt}</td>
                     <td class="td-detalle">${v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA')}</td>
                     <td class="td-debe">${d  ? '$' + d.toLocaleString()  : '-'}</td>
                     <td class="td-haber">${hb ? '$' + hb.toLocaleString() : '-'}</td>
-                    <td style="white-space:nowrap;">
-                        ${btnPagar}
-                        <span class="btn-edit"   onclick="editarRegistro('${v.id}')">✏️</span>
-                        <span class="btn-delete" onclick="borrarRegistro('${v.id}')">🗑️</span>
-                    </td>`;
+                    <td style="white-space:nowrap;">${btnPagar}<span class="btn-edit" onclick="editarRegistro('${v.id}')">✏️</span><span class="btn-delete" onclick="borrarRegistro('${v.id}')">🗑️</span></td>`;
                 tbody.appendChild(tr);
             });
 
             const subSaldo = subD - subH;
-            const s = document.createElement('tr');
-            s.className = 'row-subtotal-mes';
-            s.dataset.mes = m;
-            const btnPagarMes = subSaldo > 0
-                ? `<td colspan="2" style="text-align:right; padding-right:10px;">
-                       <button class="btn-pagar" onclick="pagarMes('${m}')">💲 Pagar este mes</button>
-                   </td>`
-                : `<td colspan="2"></td>`;
+            const s = document.createElement('tr'); s.className = 'row-subtotal-mes'; s.dataset.mes = m;
+            const btnPagarMes = subSaldo > 0 ? `<td colspan="2" style="text-align:right; padding-right:10px;"><button class="btn-pagar" onclick="pagarMes('${m}')">💲 Pagar este mes</button></td>` : `<td colspan="2"></td>`;
+            
+            let flechaSub = subSaldo > 0 ? '▲' : (subSaldo < 0 ? '▼ A favor' : '✓');
+            
             s.innerHTML = `
                 <td colspan="2" style="text-align:right; font-size:0.75rem; letter-spacing:0.5px;">SUBTOTAL MES</td>
-                <td class="${subSaldo > 0 ? 'td-debe' : 'td-haber'}">$${Math.abs(subSaldo).toLocaleString()} ${subSaldo > 0 ? '▲' : '✓'}</td>
+                <td class="${subSaldo > 0 ? 'td-debe' : 'td-haber'}">$${Math.abs(subSaldo).toLocaleString()} ${flechaSub}</td>
                 ${btnPagarMes}`;
             tbody.appendChild(s);
         });
 
-        const colorSaldo = saldoT > 0 ? '#ff6b6b' : '#00ff88';
+        const colorSaldo = saldoT > 0 ? '#ff6b6b' : (saldoT < 0 ? '#29b6f6' : '#00ff88');
+        let txtSaldo = saldoT > 0 ? 'Saldo deudor' : (saldoT < 0 ? 'Saldo a favor' : 'Cuenta al día');
         document.getElementById('resumen-final-cont').innerHTML = `
-            <div class="saldo-final">
-                <div class="sf-label">Saldo total</div>
-                <div class="sf-val" style="color:${colorSaldo};">$${saldoT.toLocaleString()}</div>
+            <div class="saldo-final" style="${saldoT < 0 ? 'border-top: 3px solid #29b6f6;' : ''}">
+                <div class="sf-label">${txtSaldo}</div>
+                <div class="sf-val" style="color:${colorSaldo};">$${Math.abs(saldoT).toLocaleString()}</div>
             </div>`;
     }
 
-    /* ══ MODAL CIERRE DE MES ══ */
     let _deudaModal = 0;
-
     function _abrirCierre(mesPreseleccionado) {
         if (!sel) return;
         _deudaModal = 0;
@@ -1098,8 +842,7 @@
     }
     function abrirModalCierre() { _abrirCierre(null); }
     function pagarMes(mes)      { _abrirCierre(mes); }
-
-    function cerrarModal() { document.getElementById('modal-cierre').style.display = 'none'; }
+    function cerrarModal()      { document.getElementById('modal-cierre').style.display = 'none'; }
 
     function calcularDeudaMesModal() {
         const m = document.getElementById('mes-cierre').value;
@@ -1107,7 +850,7 @@
         let t = 0;
         datos.filter(v => v.cliente === sel && v.fecha.startsWith(m) && !v.descripcion?.startsWith('CIERRE MES'))
              .forEach(v => { t += v.esAbono ? -v.monto : v.monto; });
-        _deudaModal = Math.max(t, 0);
+        _deudaModal = Math.max(t, 0); 
         document.getElementById('modal-sub').innerText = `Cliente: ${sel}`;
         document.getElementById('lbl-deuda-total').innerText = `$${_deudaModal.toLocaleString()}`;
         document.getElementById('monto-cierre').value = _deudaModal > 0 ? _deudaModal : '';
@@ -1118,7 +861,8 @@
         const cobrado   = parseFloat(document.getElementById('monto-cierre').value) || 0;
         const deuda     = _deudaModal;
         const pendiente = Math.max(0, Math.round((deuda - cobrado) * 100) / 100);
-        const pct       = deuda > 0 ? Math.min(100, Math.round((cobrado / deuda) * 100)) : 0;
+        const sobrante  = Math.max(0, Math.round((cobrado - deuda) * 100) / 100);
+        const pct       = deuda > 0 ? Math.min(100, Math.round((cobrado / deuda) * 100)) : 100;
         const btn       = document.getElementById('btn-confirmar-cierre');
         const panel     = document.getElementById('panel-resultado');
         const fill      = document.getElementById('prog-fill');
@@ -1129,7 +873,7 @@
         else if (pct >= 50) fill.style.background = 'linear-gradient(90deg,#f39c12,#f1c40f)';
         else                fill.style.background = 'linear-gradient(90deg,#e74c3c,#e67e22)';
 
-        if (cobrado <= 0 || cobrado > deuda || deuda === 0) {
+        if (cobrado <= 0 || (deuda === 0 && cobrado === 0)) {
             panel.style.display = 'none';
             btn.disabled = true;
             btn.innerText = 'REGISTRAR COBRO';
@@ -1139,15 +883,23 @@
         panel.style.display = 'block';
         btn.disabled = false;
 
-        if (pendiente === 0) {
+        document.getElementById('sub-completo').style.display = 'none';
+        document.getElementById('sub-parcial').style.display  = 'none';
+        document.getElementById('sub-sobrante').style.display = 'none';
+
+        if (sobrante > 0 || (deuda === 0 && cobrado > 0)) {
+            panel.className = 'sobrante';
+            document.getElementById('sub-sobrante').style.display = 'block';
+            document.getElementById('lbl-cobrado-sob').innerText = `$${cobrado.toLocaleString()}`;
+            document.getElementById('lbl-sobrante').innerText = `$${sobrante.toLocaleString()}`;
+            btn.innerText = '🔄 REGISTRAR COBRO CON SOBRANTE';
+        } else if (pendiente === 0) {
             panel.className = 'completo';
             document.getElementById('sub-completo').style.display = 'block';
-            document.getElementById('sub-parcial').style.display  = 'none';
             document.getElementById('lbl-cobro-ok').innerText = `$${cobrado.toLocaleString()}`;
             btn.innerText = '✅ REGISTRAR COBRO TOTAL';
         } else {
             panel.className = 'parcial';
-            document.getElementById('sub-completo').style.display = 'none';
             document.getElementById('sub-parcial').style.display  = 'block';
             document.getElementById('lbl-cobrado').innerText   = `$${cobrado.toLocaleString()}`;
             document.getElementById('lbl-pendiente').innerText = `$${pendiente.toLocaleString()}`;
@@ -1159,7 +911,8 @@
         const mesE    = document.getElementById('mes-cierre').value;
         const cobrado = parseFloat(document.getElementById('monto-cierre').value);
         const deuda   = _deudaModal;
-        if (!mesE || isNaN(cobrado) || cobrado <= 0 || cobrado > deuda) return;
+        
+        if (!mesE || isNaN(cobrado) || cobrado <= 0) return;
 
         const btn = document.getElementById('btn-confirmar-cierre');
         btn.disabled = true;
@@ -1172,14 +925,20 @@
         const sigMes  = mes === 12 ? 1 : mes + 1;
         const sigAnio = mes === 12 ? anio + 1 : anio;
         const fechaSig = `${sigAnio}-${String(sigMes).padStart(2, '0')}-01`;
-        const pendiente = Math.round((deuda - cobrado) * 100) / 100;
+        
+        const pendiente   = Math.max(0, Math.round((deuda - cobrado) * 100) / 100);
+        const sobrante    = Math.max(0, Math.round((cobrado - deuda) * 100) / 100);
+        const montoCierre = cobrado > deuda ? deuda : cobrado;
 
         try {
-            await db.collection("ventas").add({
-                cliente: sel, monto: cobrado, fecha: fechaCierre,
-                esAbono: true, descripcion: `CIERRE MES ${mesE}`,
-                creadoEn: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            if (montoCierre > 0) {
+                await db.collection("ventas").add({
+                    cliente: sel, monto: montoCierre, fecha: fechaCierre,
+                    esAbono: true, descripcion: `CIERRE MES ${mesE}`,
+                    creadoEn: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
             if (pendiente > 0) {
                 await db.collection("ventas").add({
                     cliente: sel, monto: pendiente, fecha: fechaSig,
@@ -1187,10 +946,19 @@
                     creadoEn: firebase.firestore.FieldValue.serverTimestamp()
                 });
             }
+            
+            if (sobrante > 0) {
+                await db.collection("ventas").add({
+                    cliente: sel, monto: sobrante, fecha: fechaSig,
+                    esAbono: true, descripcion: `SOBRANTE MES ANTERIOR (${mesE})`,
+                    creadoEn: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
             cerrarModal();
-            const msg = pendiente > 0
-                ? `Cobro parcial $${cobrado.toLocaleString()} registrado.\nSaldo $${pendiente.toLocaleString()} pasado al mes siguiente ✔`
-                : `Cierre completo de ${mesE} registrado ✔`;
+            let msg = sobrante > 0 
+                ? `Cobro registrado.\n$${sobrante.toLocaleString()} a favor para el mes siguiente 🔄` 
+                : (pendiente > 0 ? `Cobro parcial registrado.\nSaldo de $${pendiente.toLocaleString()} al mes siguiente ✔` : `Cierre completo registrado ✔`);
             mostrarToast(msg);
         } catch(e) {
             alert("Error al guardar: " + e.message);
@@ -1199,273 +967,113 @@
         }
     }
 
-    /* ══ PAGAR MES COMPLETO DESDE SUBTOTAL ══ */
-    function pagarMes(mes) {
-        if (!sel) return;
-        // Reutiliza el modal de cierre preseleccionando el mes indicado
-        _deudaModal = 0;
-        document.getElementById('mes-cierre').value = mes;
-        document.getElementById('monto-cierre').value = "";
-        document.getElementById('panel-resultado').style.display = 'none';
-        document.getElementById('btn-confirmar-cierre').disabled = true;
-        document.getElementById('btn-confirmar-cierre').innerText = 'REGISTRAR COBRO';
-        document.getElementById('prog-fill').style.width = '0%';
-        document.getElementById('lbl-pct').innerText = '0%';
-        calcularDeudaMesModal();
-        document.getElementById('modal-cierre').style.display = 'flex';
-    }
-
-    /* ══ PAGAR VENTA INDIVIDUAL ══ */
     async function pagarVenta(id, monto, fecha, desc) {
         const detalle = desc ? `"${desc}"` : 'esta venta';
         if (!confirm(`¿Registrar el pago de $${monto.toLocaleString()} correspondiente a ${detalle}?`)) return;
-        // El abono queda en la misma fecha que la venta para que aparezca en el mismo período
         try {
             await db.collection("ventas").add({
-                cliente: sel,
-                monto: monto,
-                fecha: fecha.split('T')[0],
-                esAbono: true,
-                descripcion: `PAGO: ${desc || 'COMPRA'}`,
+                cliente: sel, monto: monto, fecha: fecha.split('T')[0],
+                esAbono: true, descripcion: `PAGO: ${desc || 'COMPRA'}`,
                 creadoEn: firebase.firestore.FieldValue.serverTimestamp()
             });
-            mostrarToast(`✅ Pago de $${monto.toLocaleString()} registrado correctamente`);
-        } catch(e) {
-            alert("Error al registrar el pago: " + e.message);
-        }
+            mostrarToast(`✅ Pago registrado correctamente`);
+        } catch(e) { alert("Error al registrar el pago: " + e.message); }
     }
 
-    /* ══ LIMPIAR ══ */
     function limpiar() {
-        sel = "";
-        document.getElementById('v-cli').value = "";
-        document.getElementById('a-cli').value = "";
-        document.getElementById('tools').style.display = 'none';
-        document.getElementById('c-visto').innerText = "—";
-        document.getElementById('resumen-final-cont').innerHTML = "";
-        document.getElementById('tabla-card').style.display = 'none';
-        actualizarLista();
-        dibujar();
+        sel = ""; document.getElementById('v-cli').value = ""; document.getElementById('a-cli').value = "";
+        document.getElementById('tools').style.display = 'none'; document.getElementById('c-visto').innerText = "—";
+        document.getElementById('resumen-final-cont').innerHTML = ""; document.getElementById('tabla-card').style.display = 'none';
+        actualizarLista(); dibujar();
     }
 
-    /* ══ MODAL SELECCIÓN PERÍODO ══ */
-    let _accionPendiente = null; // 'excel' | 'print' | 'wa'
+    /* ══ MODALES EXCEL / WHATSAPP / PRINT ══ */
+    let _accionPendiente = null;
 
     function abrirModalPeriodo(accion) {
         if (!sel) return;
         _accionPendiente = accion;
-
-        // Armar opciones de meses disponibles para el cliente
-        const mesesDisp = [...new Set(
-            datos.filter(v => v.cliente === sel).map(v => v.fecha.slice(0, 7))
-        )].sort();
-
+        const mesesDisp = [...new Set(datos.filter(v => v.cliente === sel).map(v => v.fecha.slice(0, 7)))].sort();
         const select = document.getElementById('sel-periodo');
         select.innerHTML = `<option value="todos">📋 Toda la cuenta</option>`;
         mesesDisp.forEach(m => {
             const [anio, mes] = m.split('-');
-            const nombre = new Date(parseInt(anio), parseInt(mes)-1, 1)
-                .toLocaleString('es-AR', { month: 'long', year: 'numeric' });
-            const opt = document.createElement('option');
-            opt.value = m;
-            opt.textContent = `📅 ${nombre.charAt(0).toUpperCase() + nombre.slice(1)}`;
+            const nombre = new Date(parseInt(anio), parseInt(mes)-1, 1).toLocaleString('es-AR', { month: 'long', year: 'numeric' });
+            const opt = document.createElement('option'); opt.value = m; opt.textContent = `📅 ${nombre.charAt(0).toUpperCase() + nombre.slice(1)}`;
             select.appendChild(opt);
         });
-
-        const iconos = { excel: '📊', print: '🖨️', wa: '💬' };
-        const nombres = { excel: 'Exportar Excel', print: 'Imprimir', wa: 'Compartir por WhatsApp' };
+        const iconos = { excel: '📊', print: '🖨️', wa: '💬' }; const nombres = { excel: 'Exportar Excel', print: 'Imprimir', wa: 'Compartir por WhatsApp' };
         document.getElementById('modal-periodo-titulo').innerText = `${iconos[accion]} ${nombres[accion]}`;
         document.getElementById('modal-periodo-cliente').innerText = `Cliente: ${sel}`;
         document.getElementById('modal-periodo').style.display = 'flex';
     }
 
-    function cerrarModalPeriodo() {
-        document.getElementById('modal-periodo').style.display = 'none';
-        _accionPendiente = null;
-    }
-
+    function cerrarModalPeriodo() { document.getElementById('modal-periodo').style.display = 'none'; _accionPendiente = null; }
     function confirmarPeriodo() {
-        const periodo = document.getElementById('sel-periodo').value;
-        const accion = _accionPendiente; // guardar ANTES de cerrar, cerrar resetea _accionPendiente
+        const periodo = document.getElementById('sel-periodo').value; const accion = _accionPendiente;
         cerrarModalPeriodo();
         if (accion === 'excel') _exportarExcel(periodo);
         if (accion === 'print') _imprimirTabla(periodo);
         if (accion === 'wa')    _compartirWhatsApp(periodo);
     }
+    function _getDatosFiltrados(periodo) { const base = datos.filter(v => v.cliente === sel); return periodo === 'todos' ? base : base.filter(v => v.fecha.startsWith(periodo)); }
+    function _agruparPorMes(lista) { const meses = {}; lista.forEach(v => { const m = v.fecha.slice(0, 7); if (!meses[m]) meses[m] = []; meses[m].push(v); }); return meses; }
+    function _nombreMes(m) { const [a, ms] = m.split('-'); return new Date(parseInt(a), parseInt(ms)-1, 1).toLocaleString('es-AR', { month: 'long', year: 'numeric' }).toUpperCase(); }
 
-    /* ══ HELPERS PERÍODO ══ */
-    function _getDatosFiltrados(periodo) {
-        const base = datos.filter(v => v.cliente === sel);
-        if (periodo === 'todos') return base;
-        return base.filter(v => v.fecha.startsWith(periodo));
-    }
-
-    function _agruparPorMes(lista) {
-        const meses = {};
-        lista.forEach(v => {
-            const m = v.fecha.slice(0, 7);
-            if (!meses[m]) meses[m] = [];
-            meses[m].push(v);
-        });
-        return meses;
-    }
-
-    function _nombreMes(m) {
-        const [anio, mes] = m.split('-');
-        const n = new Date(parseInt(anio), parseInt(mes)-1, 1)
-            .toLocaleString('es-AR', { month: 'long', year: 'numeric' });
-        return n.toUpperCase();
-    }
-
-    /* ══ EXCEL ══ */
     function exportarExcel() { abrirModalPeriodo('excel'); }
-
     function _exportarExcel(periodo) {
-        const esTodo = periodo === 'todos';
-        const meses = _agruparPorMes(_getDatosFiltrados(periodo));
-        const labelSaldo = esTodo ? 'SALDO TOTAL' : `SALDO ${_nombreMes(periodo)}`;
-
-        const filas = [
-            [`PANADERÍA LOS ARTESANOS — Cuenta corriente: ${sel}`],
-            !esTodo ? [`Período: ${_nombreMes(periodo)}`] : [],
-            [],
-            ["Fecha", "Detalle", "Debe ($)", "Haber ($)"]
-        ].filter(f => f.length > 0);
-
-        let saldoTotal = 0;
+        const esTodo = periodo === 'todos'; const meses = _agruparPorMes(_getDatosFiltrados(periodo));
+        let saldoTotal = 0; const filas = [[`PANADERÍA LOS ARTESANOS — Cuenta corriente: ${sel}`], !esTodo ? [`Período: ${_nombreMes(periodo)}`] : [], [], ["Fecha", "Detalle", "Debe ($)", "Haber ($)"]].filter(f => f.length > 0);
         Object.keys(meses).sort().forEach(m => {
             if (esTodo) filas.push([`— ${_nombreMes(m)} —`, "", "", ""]);
             let subD = 0, subH = 0;
             meses[m].sort((a,b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
-                const d  = v.esAbono ? 0 : v.monto;
-                const hb = v.esAbono ? v.monto : 0;
+                const d  = v.esAbono ? 0 : v.monto; const hb = v.esAbono ? v.monto : 0;
                 subD += d; subH += hb; 
-                
-                // Si imprimimos todo, ignoramos el duplicado. Si imprimimos un mes suelto, lo necesitamos.
-                if (!esTodo || !v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
-                    saldoTotal += (d - hb);
-                }
-
-                filas.push([
-                    v.fecha.split('T')[0].split('-').reverse().join('/'),
-                    v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA'),
-                    d || "", hb || ""
-                ]);
+                if (!esTodo || (!v.descripcion?.startsWith('SALDO MES ANTERIOR'))) saldoTotal += (d - hb);
+                filas.push([v.fecha.split('T')[0].split('-').reverse().join('/'), v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA'), d || "", hb || ""]);
             });
-            // Subtotal solo si hay más de un mes
             if (esTodo) filas.push(["", `SUBTOTAL ${_nombreMes(m)}`, subD - subH, ""]);
         });
-
-        filas.push([], ["", labelSaldo, saldoTotal, ""]);
-
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet(filas);
-        ws['!cols'] = [{wch:14},{wch:32},{wch:14},{wch:14}];
-        XLSX.utils.book_append_sheet(wb, ws, sel.slice(0,31));
-        const sufijo = !esTodo ? `_${periodo}` : '';
-        XLSX.writeFile(wb, `Cuenta_${sel}${sufijo}.xlsx`);
+        filas.push([], ["", esTodo ? 'SALDO TOTAL' : `SALDO ${_nombreMes(periodo)}`, saldoTotal, ""]);
+        const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet(filas);
+        ws['!cols'] = [{wch:14},{wch:32},{wch:14},{wch:14}]; XLSX.utils.book_append_sheet(wb, ws, sel.slice(0,31));
+        XLSX.writeFile(wb, `Cuenta_${sel}${!esTodo ? `_${periodo}` : ''}.xlsx`);
     }
 
-    /* ══ IMPRESIÓN ══ */
     function imprimirTabla() { abrirModalPeriodo('print'); }
-
     function _imprimirTabla(periodo) {
-        // Calcular saldo del período seleccionado
-        const esTodo = periodo === 'todos';
-        const datosPeriodo = _getDatosFiltrados(periodo);
-        let saldoPeriodo = 0;
-        datosPeriodo.forEach(v => { 
-            if (!esTodo || !v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
-                saldoPeriodo += v.esAbono ? -v.monto : v.monto; 
-            }
-        });
-
+        const esTodo = periodo === 'todos'; const datosPeriodo = _getDatosFiltrados(periodo); let saldoPeriodo = 0;
+        datosPeriodo.forEach(v => { if (!esTodo || (!v.descripcion?.startsWith('SALDO MES ANTERIOR'))) saldoPeriodo += v.esAbono ? -v.monto : v.monto; });
         const labelSaldo = esTodo ? 'SALDO TOTAL' : `SALDO ${_nombreMes(periodo)}`;
-
-        // Inyectar nombre del cliente y saldo correcto en el área de resumen temporal
-        const resumenCont = document.getElementById('resumen-final-cont');
-        const resumenOriginal = resumenCont.innerHTML;
-
-        // Reemplazar saldo por el del período
-        resumenCont.innerHTML = `
-            <div class="saldo-final">
-                <div class="sf-label">${labelSaldo} — ${sel}</div>
-                <div class="sf-val">$${saldoPeriodo.toLocaleString()}</div>
-            </div>`;
-
-        // Ocultar filas de otros meses si es período específico
-        const filas = document.querySelectorAll('#res-tabla tr');
-        const ocultadas = [];
-        if (!esTodo) {
-            filas.forEach(tr => {
-                if (tr.dataset.mes && tr.dataset.mes !== periodo) {
-                    tr.style.display = 'none';
-                    ocultadas.push(tr);
-                }
-            });
-        }
-
-        // Inyectar nombre del cliente en el título impreso via CSS variable
-        document.documentElement.style.setProperty('--print-cliente', `"${sel}"`);
-
-        window.print();
-
-        // Restaurar todo
-        setTimeout(() => {
-            ocultadas.forEach(tr => tr.style.display = '');
-            resumenCont.innerHTML = resumenOriginal;
-        }, 500);
+        const resumenCont = document.getElementById('resumen-final-cont'); const resumenOriginal = resumenCont.innerHTML;
+        resumenCont.innerHTML = `<div class="saldo-final"><div class="sf-label">${labelSaldo} — ${sel}</div><div class="sf-val">$${saldoPeriodo.toLocaleString()}</div></div>`;
+        const filas = document.querySelectorAll('#res-tabla tr'); const ocultadas = [];
+        if (!esTodo) filas.forEach(tr => { if (tr.dataset.mes && tr.dataset.mes !== periodo) { tr.style.display = 'none'; ocultadas.push(tr); }});
+        document.documentElement.style.setProperty('--print-cliente', `"${sel}"`); window.print();
+        setTimeout(() => { ocultadas.forEach(tr => tr.style.display = ''); resumenCont.innerHTML = resumenOriginal; }, 500);
     }
 
-    /* ══ WHATSAPP ══ */
     function compartirWhatsApp() { abrirModalPeriodo('wa'); }
-
     function _compartirWhatsApp(periodo) {
-        const meses = _agruparPorMes(_getDatosFiltrados(periodo));
-        const esTodo = periodo === 'todos';
-        const periodoLabel = !esTodo ? `📅 ${_nombreMes(periodo)}` : '';
-
-        let msg = `🥖 *PANADERÍA LOS ARTESANOS*\n`;
-        msg += `📋 *Cuenta corriente de: ${sel}*\n`;
-        if (periodoLabel) msg += `${periodoLabel}\n`;
-        msg += `─────────────────────\n`;
-
+        const meses = _agruparPorMes(_getDatosFiltrados(periodo)); const esTodo = periodo === 'todos';
+        let msg = `🥖 *PANADERÍA LOS ARTESANOS*\n📋 *Cuenta corriente de: ${sel}*\n${!esTodo ? `📅 ${_nombreMes(periodo)}\n` : ''}─────────────────────\n`;
         let saldoTotal = 0;
-        const mesKeys = Object.keys(meses).sort();
-        mesKeys.forEach(m => {
-            // Encabezado de mes solo si hay más de un mes
+        Object.keys(meses).sort().forEach(m => {
             if (esTodo) msg += `\n📅 *${_nombreMes(m)}*\n`;
             let subD = 0, subH = 0;
             meses[m].sort((a,b) => a.fecha.slice(0,10).localeCompare(b.fecha.slice(0,10))).forEach(v => {
-                const d  = v.esAbono ? 0 : v.monto;
-                const hb = v.esAbono ? v.monto : 0;
+                const d  = v.esAbono ? 0 : v.monto; const hb = v.esAbono ? v.monto : 0;
                 subD += d; subH += hb; 
-                
-                if (!esTodo || !v.descripcion?.startsWith('SALDO MES ANTERIOR')) {
-                    saldoTotal += (d - hb);
-                }
-
-                const fechaFmt = v.fecha.split('T')[0].split('-').reverse().join('/');
-                const desc = v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA');
+                if (!esTodo || (!v.descripcion?.startsWith('SALDO MES ANTERIOR'))) saldoTotal += (d - hb);
+                const fechaFmt = v.fecha.split('T')[0].split('-').reverse().join('/'); const desc = v.descripcion || (v.esAbono ? 'ABONO' : 'COMPRA');
                 if (d)  msg += `  ${fechaFmt}  ${desc}  *-$${d.toLocaleString()}*\n`;
                 if (hb) msg += `  ${fechaFmt}  ${desc}  *+$${hb.toLocaleString()}*\n`;
             });
-            // Subtotal solo si hay más de un mes
-            if (esTodo) {
-                msg += `  Subtotal: *$${(subD-subH).toLocaleString()}*\n`;
-                msg += `─────────────────────\n`;
-            }
+            if (esTodo) { msg += `  Subtotal: *$${(subD-subH).toLocaleString()}*\n─────────────────────\n`; }
         });
-
-        const labelFinal = esTodo ? 'SALDO TOTAL' : `SALDO ${_nombreMes(periodo)}`;
-        msg += `\n💰 *${labelFinal}: $${saldoTotal.toLocaleString()}*`;
-
+        msg += `\n💰 *${esTodo ? 'SALDO TOTAL' : `SALDO ${_nombreMes(periodo)}`}: $${saldoTotal.toLocaleString()}*`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    /* ══ PWA — SERVICE WORKER ══ */
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
     }
 </script>
 </body>
